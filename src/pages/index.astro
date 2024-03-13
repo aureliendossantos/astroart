@@ -1,16 +1,34 @@
 ---
+import { IgdbAccessToken, Work, db } from "astro:db"
 
+export const prerender = true
+
+const works = await db.select().from(Work)
+const tokens = await db.select().from(IgdbAccessToken)
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<h1>Works</h1>
+{
+	works.map((work) => (
+		<p>
+			<code>{work.id}</code>
+			{work.title}
+			<br />
+			<code>{work.slug}</code>
+			<br />
+			{work.type}
+			<br />
+			Created at: {work.createdAt}
+			<br />
+			Updated at: {work.updatedAt}
+		</p>
+	))
+}
+<h1>Tokens</h1>
+{
+	tokens.map((t) => (
+		<p>
+			<code>{t.token}</code> Expires at: {t.expiresAt}
+		</p>
+	))
+}
