@@ -1,8 +1,6 @@
 ---
 import { IgdbAccessToken, Work, db } from "astro:db"
 
-export const prerender = true
-
 const works = await db.select().from(Work)
 const tokens = await db.select().from(IgdbAccessToken)
 ---
