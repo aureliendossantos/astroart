@@ -13,7 +13,7 @@
 >
 	<label for="source">source</label>
 	<select
-		id="sourceSelector"
+		id="typeSelector"
 		name="type"
 		class="dark:bg-black col-span-2 p-2 border dark:border-neutral-700 border-neutral-300 rounded-md dark:text-neutral-400 font-semibold"
 	>
@@ -44,14 +44,14 @@
 
 <script>
 	const workForm = document.getElementById("findWorkForm") as HTMLFormElement
-	const sourceSelector = document.getElementById(
-		"sourceSelector"
+	const typeSelector = document.getElementById(
+		"typeSelector"
 	) as HTMLSelectElement
 
-	const path = { IGDB: "games", TMDB: "movies" }
+	const path = { VideoGame: "games", Movie: "movies" }
 
-	sourceSelector.addEventListener("change", function () {
-		const value = this.value as "IGDB" | "TMDB"
+	typeSelector.addEventListener("change", function () {
+		const value = this.value as "VideoGame" | "Movie"
 		workForm.action = `/${path[value]}/find`
 	})
 </script>
