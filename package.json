@@ -1,0 +1,20 @@
+{
+  "name": "studio-template-empty",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/db": "^0.7.0",
+    "astro": "^4.4.11"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.5.6",
+    "typescript": "^5.3.3"
+  }
+}
