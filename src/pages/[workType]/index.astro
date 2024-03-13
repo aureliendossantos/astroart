@@ -1,0 +1,29 @@
+---
+import Layout from "$layouts/Layout.astro"
+import { workPathToWorkType } from "$lib/works/find"
+import { Work } from "astro:db"
+import { db, eq } from "astro:db"
+
+const path = Astro.params.workType as string
+const workType = workPathToWorkType(path)
+if (!workType) {
+	return new Response(null, {
+		status: 404,
+		statusText: "Page not found: Invalid work type.",
+	})
+}
+const works = await db.select().from(Work).where(eq(Work.type, workType))
+---
+
+<Layout title={`${workType}s`}>
+	<h1>{`${workType}s`}</h1>
+	<ul>
+		{
+			works.map((work) => (
+				<li>
+					<a href={`/${path}/${work.slug}`}>{work.title}</a>
+				</li>
+			))
+		}
+	</ul>
+</Layout>

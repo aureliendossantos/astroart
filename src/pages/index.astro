@@ -1,32 +1,22 @@
 ---
-import { IgdbAccessToken, Work, db } from "astro:db"
+export const prerender = true
 
-const works = await db.select().from(Work)
-const tokens = await db.select().from(IgdbAccessToken)
+import Layout from "../layouts/Layout.astro"
+import FindWorkForm from "$components/playground/FindWorkForm.astro"
+import { getEntry } from "astro:content"
+
+const bio = await getEntry("docs", "index")
+const { Content: Bio } = await bio.render()
+const docs = await getEntry("docs", "api")
+const { Content: Docs } = await docs.render()
 ---
 
-<h1>Works</h1>
-{
-	works.map((work) => (
-		<p>
-			<code>{work.id}</code>
-			{work.title}
-			<br />
-			<code>{work.slug}</code>
-			<br />
-			{work.type}
-			<br />
-			Created at: {work.createdAt}
-			<br />
-			Updated at: {work.updatedAt}
-		</p>
-	))
-}
-<h1>Tokens</h1>
-{
-	tokens.map((t) => (
-		<p>
-			<code>{t.token}</code> Expires at: {t.expiresAt}
-		</p>
-	))
-}
+<Layout title="API Docs" home>
+	<h1>AstroArt</h1>
+	<Bio />
+	<hr />
+	<FindWorkForm />
+	<hr />
+	<h1>{docs.data.title}</h1>
+	<Docs />
+</Layout>

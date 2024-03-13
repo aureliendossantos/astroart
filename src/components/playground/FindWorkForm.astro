@@ -1,0 +1,57 @@
+<h1>Testing the API</h1>
+<p>
+	You can check out the existing <a href="/movies">movies</a> and <a
+		href="/games">video games</a
+	>.
+</p>
+<h2>Find a work</h2>
+<form
+	id="findWorkForm"
+	action="/games/find"
+	method="get"
+	class="grid grid-cols-3 max-w-lg gap-2"
+>
+	<label for="source">source</label>
+	<select
+		id="sourceSelector"
+		name="type"
+		class="dark:bg-black col-span-2 p-2 border dark:border-neutral-700 border-neutral-300 rounded-md dark:text-neutral-400 font-semibold"
+	>
+		<option value="VideoGame">IGDB</option>
+		<option value="Movie">TMDB</option>
+	</select>
+	<label for="id">id</label>
+	<input
+		type="number"
+		name="id"
+		placeholder="0000"
+		class="dark:bg-black col-span-2 px-2 py-[6px] dark:placeholder:text-neutral-600 font-mono border dark:border-neutral-700 border-neutral-300 rounded-md dark:text-neutral-400"
+	/>
+	<label for="slug">or slug (IGDB only)</label>
+	<input
+		type="text"
+		name="slug"
+		placeholder="slug"
+		class="dark:bg-black col-span-2 px-2 py-[6px] dark:placeholder:text-neutral-600 font-mono border dark:border-neutral-700 border-neutral-300 rounded-md dark:text-neutral-400"
+	/>
+	<div class="col-span-1"></div>
+	<button
+		type="submit"
+		class="px-2 col-span-2 py-[6px] border dark:border-neutral-700 border-neutral-300 rounded-md dark:text-neutral-400 font-semibold bg-gradient-to-b dark:from-neutral-800 dark:to-neutral-900 from-white to-neutral-100"
+		>Search</button
+	>
+</form>
+
+<script>
+	const workForm = document.getElementById("findWorkForm") as HTMLFormElement
+	const sourceSelector = document.getElementById(
+		"sourceSelector"
+	) as HTMLSelectElement
+
+	const path = { IGDB: "games", TMDB: "movies" }
+
+	sourceSelector.addEventListener("change", function () {
+		const value = this.value as "IGDB" | "TMDB"
+		workForm.action = `/${path[value]}/find`
+	})
+</script>

@@ -48,6 +48,7 @@ const findWorkUsingSourceId = async (type: string, id: string) => {
 const findWorkUsingSourceSlug = async (type: string, slug: string) => {
 	if (type === "VideoGame") {
 		const igdb = await getIGDBfromSlug(slug)
+		if (!igdb) return null
 		return await db
 			.select()
 			.from(Work)

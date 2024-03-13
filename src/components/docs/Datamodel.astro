@@ -1,0 +1,25 @@
+---
+import { Work } from "astro:db"
+import { db } from "astro:db"
+
+interface Props {
+	name: string
+}
+const { name } = Astro.props
+
+const work = await db.select().from(Work).get()
+
+const keys = work && Object.keys(work)
+---
+
+<table class="font-mono w-auto unstyled">
+	<tbody>
+		{
+			keys?.map((value) => (
+				<tr>
+					<td>{value}</td>
+				</tr>
+			))
+		}
+	</tbody>
+</table>

@@ -1,0 +1,42 @@
+---
+import Layout from "$layouts/Layout.astro"
+import { workPathToWorkType } from "$lib/works/find"
+import { Work } from "astro:db"
+import { db, and, eq } from "astro:db"
+
+const workType = workPathToWorkType(Astro.params.workType as string)
+if (!workType) {
+	return new Response(null, {
+		status: 404,
+		statusText: "Page not found: Invalid work type.",
+	})
+}
+
+const work = await db
+	.select()
+	.from(Work)
+	.where(
+		and(eq(Work.slug, Astro.params.workSlug as string), eq(Work.type, workType))
+	)
+	.get()
+
+if (!work) {
+	return new Response(null, {
+		status: 404,
+		statusText: "Work not found.",
+	})
+}
+
+// const cover = work.covers[0] && work.covers[0].images[0] && work.covers[0].images[0].url
+---
+
+<Layout title={work.title}>
+	<h1>{work.title}</h1>
+	<p>{work.type}</p>
+	<h3>Data sources</h3>
+	<ul>
+		<li>
+			ID: {work.sourceId}
+		</li>
+	</ul>
+</Layout>

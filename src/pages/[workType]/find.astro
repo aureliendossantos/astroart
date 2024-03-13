@@ -1,0 +1,42 @@
+---
+import Layout from "$layouts/Layout.astro"
+import { GET } from "$api/works/find"
+import { workTypeToWorkPath } from "$lib/works/find"
+
+const pathToWorkType = (pathName: string) => {
+	switch (pathName) {
+		case "games":
+			return "VideoGame"
+		case "movies":
+			return "Movie"
+		default:
+			throw new Error("Invalid work type")
+	}
+}
+
+const type = pathToWorkType(Astro.params.workType as string)
+const id = Astro.url.searchParams.get("id")
+const slug = Astro.url.searchParams.get("slug")
+if (!id && !slug) throw new Error("No id or slug provided")
+
+const myRequest = {
+	...Astro,
+	request: new Request(
+		new URL(
+			`/api/works/find?type=${type}&${slug ? `slug=${slug}` : `id=${id}`}`,
+			Astro.site
+		)
+	),
+}
+
+const request = await GET(myRequest)
+if (request.status == 200) {
+	const work = (await request.json()).data
+	return Astro.redirect(`/${workTypeToWorkPath(work.type)}/${work.slug}`)
+}
+---
+
+<Layout title="Error">
+	<h1>Error</h1>
+	<p>The requested work couldn't be found.</p>
+</Layout>

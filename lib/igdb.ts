@@ -84,7 +84,7 @@ export default async function getIGDBgames(
 	const idsQuery = ids ? `where id = (${ids.join()});` : ""
 	const nameQuery = searchedName ? `search "${searchedName}";` : ""
 
-	const games: IGDBData[] = await fetch(
+	const games: IGDBData[] | [undefined] = await fetch(
 		`https://api.igdb.com/v4/games`,
 		parameters(
 			`fields name, slug, cover.image_id, cover.width, cover.height, screenshots.image_id, screenshots.width, screenshots.height, platforms.abbreviation, first_release_date, release_dates.y, involved_companies.developer, involved_companies.publisher, involved_companies.company.name, websites.category, websites.url, url; ${slugsQuery}${idsQuery} ${nameQuery} limit ${limit};`

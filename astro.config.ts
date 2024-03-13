@@ -1,10 +1,19 @@
+import { defineConfig } from "astro/config"
 import vercel from "@astrojs/vercel/serverless"
 import db from "@astrojs/db"
-import { defineConfig } from "astro/config"
+import tailwind from "@astrojs/tailwind"
+import mdx from "@astrojs/mdx"
 
 // https://astro.build/config
 export default defineConfig({
-	integrations: [db()],
+	site: "http://localhost",
 	output: "server",
 	adapter: vercel(),
+	integrations: [
+		db(),
+		tailwind({
+			nesting: true,
+		}),
+		mdx(),
+	],
 })

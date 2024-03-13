@@ -1,0 +1,47 @@
+---
+title: Using the API
+---
+
+## Endpoints
+
+API endpoints start with `/api`.
+
+### `/works`
+
+Get all works in the database. It does not update their data.
+
+### `/works/find`
+
+Find a work through its ID in a remote data source. If it doesn't exist in our database, it will be added for a faster query next time (unless it's been some time and the data needs to be updated).
+
+| Parameter | Description                                                                                                                                                     |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`    | a [work type](#work-types), case-sensitive                                                                                                                      |
+| `id`      | <span class="text-neutral-600 dark:text-neutral-400 font-mono">string (if !slug)</span><br />to find a work by ID                                               |
+| `slug`    | <span class="text-neutral-600 dark:text-neutral-400 font-mono">string (if !id)</span><br />to find a work by slug if the [data source](#data-sources) has slugs |
+
+Example: [`/api/works/find?type=Movie&id=501`](/api/works/find?type=Movie&id=501)
+
+## Work types
+
+| Name        | Data source |
+| ----------- | ----------- |
+| `VideoGame` | IGDB        |
+| `Movie`     | TMDB        |
+
+## Data sources
+
+Data sources are external websites we get our data from. Each one has a different set of features:
+
+| Name | Find by ID | Find by slug |
+| ---- | ---------- | ------------ |
+| IGDB | yes        | yes          |
+| TMDB | yes        | no           |
+
+## Models
+
+import Datamodel from "$components/docs/Datamodel.astro"
+
+### Work
+
+<Datamodel name="Work" />

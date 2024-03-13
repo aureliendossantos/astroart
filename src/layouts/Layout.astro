@@ -1,0 +1,105 @@
+---
+interface Props {
+	title: string
+	home?: boolean
+}
+
+const { title, home } = Astro.props
+---
+
+<!doctype html>
+<html lang="en" class="text-sm">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title} · AstroArt</title>
+	</head>
+	<body class="bg-neutral-50 dark:bg-black dark:text-neutral-200">
+		<main
+			class="max-w-3xl min-h-screen m-auto border-x border-neutral-200 dark:border-neutral-800 p-12 leading-normal"
+		>
+			<slot />
+			{
+				!home && (
+					<footer>
+						<p class="text-neutral-400 mt-8">
+							{"← "}
+							<a href="/" class="text-neutral-400">
+								Back to home
+							</a>
+						</p>
+					</footer>
+				)
+			}
+		</main>
+	</body>
+</html>
+
+<style is:global>
+	@font-face {
+		font-family: "Geist";
+		src: url("/fonts/GeistVariableVF.woff2") format("woff2-variations");
+		font-weight: normal;
+		font-style: normal;
+		font-display: swap;
+	}
+	@font-face {
+		font-family: "Geist Mono";
+		src: url("/fonts/GeistMonoVariableVF.woff2") format("woff2-variations");
+		font-weight: normal;
+		font-style: normal;
+		font-display: swap;
+	}
+	html {
+		@apply border-neutral-200 dark:border-neutral-700;
+	}
+	a {
+		@apply text-emerald-500 dark:text-sky-300 underline underline-offset-4;
+	}
+	a[href^="/"],
+	a[href^="#"] {
+		@apply decoration-dotted;
+	}
+	h1 {
+		@apply text-4xl mt-12 mb-4;
+		& + h2 {
+			@apply mt-8;
+		}
+	}
+	h2 {
+		@apply text-3xl mt-12 mb-4;
+	}
+	h3 {
+		@apply text-2xl mt-8 mb-2;
+	}
+	p {
+		@apply my-2 leading-relaxed;
+	}
+	hr {
+		@apply -mx-12 my-12 p-2 border-y dark:border-neutral-800 w-[calc(100%+84px)];
+	}
+	table {
+		@apply mb-8 text-left;
+		thead {
+			@apply border-b dark:border-neutral-800 font-mono uppercase text-sm;
+			th {
+				@apply text-neutral-400 font-normal;
+			}
+		}
+		th,
+		td {
+			@apply p-2 pl-2 first:pl-0;
+		}
+		&:not(.unstyled) {
+			@apply mt-8 -mx-12 w-[calc(100%+84px)];
+			tr {
+				@apply border-b dark:border-neutral-800;
+			}
+			th,
+			td {
+				@apply first:pl-12 p-4 align-text-top;
+			}
+		}
+	}
+</style>

@@ -7,7 +7,7 @@ export type WorkInsert = typeof Work.$inferInsert
 
 export const createWork = async (type: string, data: any) => {
 	const workInsert = await sourceToWorkInsert(type, data)
-	return await db.insert(Work).values(workInsert).returning()
+	return await db.insert(Work).values(workInsert).returning().get()
 }
 
 const sourceToWorkInsert = async (type: string, data: any) => {
