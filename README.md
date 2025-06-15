@@ -1,8 +1,8 @@
 # AstroArt
 
-API to retrieve games from IGDB and movies from TMDB in an unified model and with faster queries.
+This API powered by [Astro DB](https://astro.build/db/) and [Vercel](https://vercel.com/) allows to retrieve games from [IGDB](https://www.igdb.com/) and movies from [TMDB](https://www.themoviedb.org/) in an unified model.
 
-Powered by [Astro](https://astro.build) and [Astro DB](https://astro.build/db).
+This is a learning project, consider it unstable.
 
 ## Commands
 
